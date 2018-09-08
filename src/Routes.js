@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Coffee } from './Coffee';
+import Coffee from './Coffee';
 import { Profile } from './Profile';
+import { Link } from 'react-router-dom'
 
 
 export class Routes extends Component {
@@ -19,7 +20,10 @@ export class Routes extends Component {
           <Route path='/:id' render={({match}) => (
             <Coffee match={match} {...this.props} />
           )}/>
-          <Route path='/my-coffees' component={Profile} user={this.props.user} />
+          <Route path='/verify/:key' render={({match}) => (
+            <div> Verify </div>
+          )}/>
+          <Route path='/my-coffees' component={Profile} />
         </Switch>
       </BrowserRouter>
     )

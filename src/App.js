@@ -18,7 +18,6 @@ user = JSON.parse(user)
 let defaultStore = {}
 if (user != null) {
   defaultStore= {
-    loggedIn: true,
     user: user.user,
     token: user.token
   }

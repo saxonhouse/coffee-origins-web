@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import axios from 'axios';
 import './App.css';
 import {
   Heading
 } from 'rebass';
-import axios from 'axios';
+import Login from './Login';
 
-export class Coffee extends Component {
+
+class Coffee extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,6 +37,7 @@ export class Coffee extends Component {
           <Heading> Coffee </Heading>
           <p> {coffee.name} </p>
           <p> {coffee.location} </p>
+          <Login />
         </div>
         :
         <Heading> Not </Heading>
@@ -42,3 +46,12 @@ export class Coffee extends Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    token: state.token,
+    user: state.user
+  };
+};
+
+export default connect(mapStateToProps)(Coffee)

@@ -1,11 +1,17 @@
 import React from 'react';
+import { combineReducers } from 'redux'
 
-export function userReducer(state={}, action) {
+export function user(state={}, action) {
   switch (action.type) {
-    case 'SET_USER':
+    case 'SET_TOKEN':
       return Object.assign({}, state, {
-        user: action.user,
-        token: action.token
+        token: action.token,
+        user_id: action.user_id
+      })
+      break;
+    case 'SET_PROFILE':
+      return Object.assign({}, state, {
+        profile: action.profile
       })
       break;
     default:
@@ -13,10 +19,16 @@ export function userReducer(state={}, action) {
   }
 }
 
-export function setUser(user, token) {
+export function setToken(token, user_id) {
   return {
-    type: 'SET_USER',
-    user,
-    token
+    type: 'SET_TOKEN',
+    token,
+    user_id,
+  }
+}
+export function setProfile(profile) {
+  return {
+    type: 'SET_PROFILE',
+    profile
   }
 }

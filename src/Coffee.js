@@ -20,16 +20,21 @@ class Coffee extends Component {
 
   componentDidMount() {
     this.loadCoffee();
-    if (this.props.user_id) {
-      axios({
-        method: 'patch',
-        url: 'http://localhost:8000/profile/' + this.props.user_id +'/',
-        headers: {
-       'Authorization': 'Token ' +this.props.token
-        },
-        data: {coffees: [this.props.match.params.id]}
-      }).then(res => console.log(res)
-    ).catch(err => console.log(err))
+    if (this.props.user_id && this.props.qr) {
+      let url = 'http://localhost:8000/profile/' + this.props.user_id +'/'
+      axios.get(url).then(res => {
+        let history = res.data.coffees
+        history.push(this.props.match.params.id)
+        axios({
+          method: 'patch',
+          url: url,
+          headers: {
+         'Authorization': 'Token ' +this.props.token
+          },
+          data: {coffees: history}
+        }).then(res => console.log(res)
+      ).catch(err => console.log(err))
+    }).catch(err => console.log(err))
     }
   }
 

@@ -26,6 +26,7 @@ export function setToken(token, user_id) {
     user_id,
   }
 }
+
 export function setProfile(profile) {
   return {
     type: 'SET_PROFILE',

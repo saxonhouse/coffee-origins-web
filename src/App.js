@@ -16,11 +16,13 @@ injectGlobal`
 
 let token = localStorage.getItem('token')
 let user_id = localStorage.getItem('user_id')
+let profile = localStorage.getItem('profile')
 let defaultStore = {}
 if (token != null) {
   defaultStore = {
     token: token,
     user_id: user_id,
+    profile: profile
   }
 }
 

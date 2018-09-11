@@ -5,12 +5,13 @@ import Verify from './Verify';
 import Header from './Header';
 import Login from './Login';
 import Logout from './Logout';
-import { Profile } from './Profile';
+import Profile from './Profile';
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { bindActionCreators } from 'redux'
 import { setProfile } from './reducer'
 import { connect } from 'react-redux'
+import { MainPage } from './MainPage'
 
 
 class Routes extends Component {
@@ -19,16 +20,7 @@ class Routes extends Component {
   }
 
   componentDidMount() {
-    axios({
-      type: 'get',
-      url: 'http://localhost:8000/profile/' + this.props.user_id + '/',
-      headers: {
-        'Authorization' : 'Token ' + this.props.token
-      }
-    }).then(res => {
-      this.props.setProfile(res.data)
-      console.log(this.props)
-    }).catch(err => console.log(err))
+    console.log(this.props)
   }
 
   render() {
@@ -38,10 +30,13 @@ class Routes extends Component {
         <BrowserRouter>
           <Switch>
             <Route exact path='/' render={({match}) => (
-              <div> Main Page </div>
+              <MainPage />
             )}/>
-            <Route exact path='/coffee/:id' render={({match}) => (
+            <Route path='/coffee/:id' render={({match}) => (
               <Coffee match={match} {...this.props} />
+            )}/>
+            <Route path='/qr-coffee/:id' render={({match}) => (
+              <Coffee match={match} qr={true} {...this.props} />
             )}/>
             <Route path='/verify/:key' render={({match}) => (
               <Verify match={match} {...this.props} />

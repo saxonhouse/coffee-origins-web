@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { setToken } from './reducer'
+import { setProfile } from './reducer'
 import axios from 'axios'
 import './App.css'
 import { Redirect } from 'react-router-dom'
@@ -19,10 +20,6 @@ class Login extends Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  componentDidMount() {
-    console.log(this.props)
-  }
-
   login = () => {
     axios.post(
       'http://localhost:8000/login/',
@@ -31,15 +28,9 @@ class Login extends Component {
         password: this.state.password
       }
     ).then(res => {
-      console.log(res)
       this.props.setToken(res.data.token, res.data.user_id)
-      console.log(this.props)
       localStorage.setItem('token', res.data.token)
       localStorage.setItem('user_id', res.data.user_id)
-      this.setState({badCredentials: false})
-      if (this.props.redirect) {
-        this.setState({redirected: true})
-      }
     }
   ).catch(err => {
     this.handleError(err.response.data)
@@ -161,7 +152,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return (
-    bindActionCreators({setToken: setToken}, dispatch)
+      bindActionCreators({setToken: setToken}, dispatch)
   );
 };
 

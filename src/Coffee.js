@@ -47,17 +47,22 @@ class Coffee extends Component {
 
   addToFavourites = () => {
     this.setState({favouriting : true})
-    axios({
-      method: 'patch',
-      url: 'http://localhost:8000/profile/' + this.props.user_id +'/',
-      headers: {
-     'Authorization': 'Token ' +this.props.token
-      },
-      data: {favourites: [this.props.match.params.id]}
-    }).then(res => {
-      console.log(res)
-      this.setState({favouriting: false, favourite : true});
-  })
+    let url = 'http://localhost:8000/profile/' + this.props.user_id +'/'
+    axios.get(url).then(res => {
+      let favourites = res.data.favourites
+      favourites.push(this.props.match.params.id)
+        axios({
+          method: 'patch',
+          url: url,
+          headers: {
+         'Authorization': 'Token ' +this.props.token
+          },
+          data: {favourites: favourites}
+        }).then(res => {
+          console.log(res)
+          this.setState({favouriting: false, favourite : true});
+        }).catch(err => console.log(err))
+      }).catch(err => console.log(err))
   }
 
   render() {

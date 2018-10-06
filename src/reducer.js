@@ -6,7 +6,8 @@ export function user(state={}, action) {
     case 'SET_TOKEN':
       return Object.assign({}, state, {
         token: action.token,
-        user_id: action.user_id
+        user_id: action.user_id,
+        staff: action.staff
       })
       break;
     case 'SET_PROFILE':
@@ -19,11 +20,12 @@ export function user(state={}, action) {
   }
 }
 
-export function setToken(token, user_id) {
+export function setToken(token, user_id, staff) {
   return {
     type: 'SET_TOKEN',
     token,
     user_id,
+    staff
   }
 }
 

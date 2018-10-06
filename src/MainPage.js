@@ -10,7 +10,7 @@ export class MainPage extends Component {
 
   render() {
     return (
-      <CoffeeList mainPage heading='All Coffees' />
+      <CoffeeList mainPage admin={this.props.admin} heading='' />
     )
   }
 }

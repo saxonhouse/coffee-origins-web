@@ -27,7 +27,8 @@ export class CoffeeCard extends Component {
             <Image src={this.props.image} />
           </Box>
           <Box width={1/2}>
-            <a href={`/coffee/${this.props.id}`}><Heading>{this.props.name}</Heading></a>
+            <a href={this.props.admin? `/mission-control/coffee/${this.props.id}`:`/coffee/${this.props.id}`}><Heading>{this.props.name}</Heading></a>
+            {this.props.admin && <a href={`/mission-control/edit/${this.props.id}`}>Edit</a>}
           </Box>
         </Flex>
       </Card>

@@ -9,7 +9,7 @@ class Header extends Component {
         <Navbar collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="/">Coffee Origins</a>
+              <a href="/">Brew Cross</a>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>

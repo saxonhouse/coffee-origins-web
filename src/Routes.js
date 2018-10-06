@@ -1,17 +1,20 @@
 import React, {Component} from 'react'
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Coffee from './Coffee';
-import Verify from './Verify';
-import Header from './Header';
-import Login from './Login';
-import Logout from './Logout';
-import Profile from './Profile';
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import Coffee from './Coffee'
+import Verify from './Verify'
+import Header from './Header'
+import Login from './Login'
+import Logout from './Logout'
+import Profile from './Profile'
+import Editor from './Editor'
+import Admin from './Admin'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { bindActionCreators } from 'redux'
 import { setProfile } from './reducer'
 import { connect } from 'react-redux'
 import { MainPage } from './MainPage'
+
 
 
 class Routes extends Component {
@@ -25,7 +28,7 @@ class Routes extends Component {
 
   render() {
     return (
-      <div>
+      <div class="container-fluid">
         <Header />
         <BrowserRouter>
           <Switch>
@@ -45,6 +48,19 @@ class Routes extends Component {
             <Route path='/login' render={() => (
               <Login redirect='/' />
             )}/>
+            <Route path='/captains-log' render={() => (
+              <Login staffLogin redirect='/mission-control/' />
+            )}/>
+            <Route exact path='/mission-control/' render={({match}) => (
+              <Admin />
+            )}/>
+            <Route path='/mission-control/coffee/:id' render={({match}) => (
+              <Coffee match={match} admin {...this.props} />
+            )}/>
+            <Route path='/mission-control/new/' component={Editor} />
+            <Route path='/mission-control/edit/:id' render={(match) => (
+              <Editor coffee={match.match.params.id} {...this.props} />
+            )}/>
             <Route path='/logout' component={Logout} />
           </Switch>
         </BrowserRouter>
@@ -58,7 +74,7 @@ class Routes extends Component {
     return {
       token: state.token,
       user_id: state.user_id,
-      profile: state.profile
+      staff: state.staff
     };
   };
 

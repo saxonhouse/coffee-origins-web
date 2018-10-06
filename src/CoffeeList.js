@@ -4,6 +4,7 @@ import axios from 'axios'
 import './App.css'
 import { Heading, Text } from 'rebass'
 import { CoffeeCard } from './CoffeeCard'
+import { Filters } from './Filters'
 
 export class CoffeeList extends Component {
   constructor(props) {
@@ -36,13 +37,18 @@ export class CoffeeList extends Component {
     return (
         <div>
           <Heading> {this.props.heading} </Heading>
+          <div className="row justify-content-end">
+            <div className="col-lg-4 align-self-end">
+             <Filters coffees={this.state.coffees} />
+            </div>
+          </div>
           {this.state.coffees.map((coffee) => {
             return (
               <CoffeeCard
                 id={coffee.id}
                 key={coffee.id}
                 name={coffee.name}
-                image={coffee.images.split("'")[1]}
+                admin={this.props.admin}
               />
             )
           })

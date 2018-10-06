@@ -9,11 +9,6 @@ import { createStore } from 'redux'
 import { user } from './reducer'
 import Header from './Header'
 
-injectGlobal`
-  * { box-sizing: border-box; }
-  body { margin: 0; }
-`
-
 let token = localStorage.getItem('token')
 let user_id = localStorage.getItem('user_id')
 let profile = localStorage.getItem('profile')
@@ -22,7 +17,7 @@ if (token != null) {
   defaultStore = {
     token: token,
     user_id: user_id,
-    profile: profile
+    staff: false
   }
 }
 

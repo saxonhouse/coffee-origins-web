@@ -21,16 +21,22 @@ class Login extends Component {
   }
 
   login = () => {
+    let url = 'http://localhost:8000/login/'
+    if (this.props.staffLogin) {
+      url = 'http://localhost:8000/staff-login/'
+    }
     axios.post(
-      'http://localhost:8000/login/',
+      url,
       {
         username: this.state.username,
         password: this.state.password
       }
     ).then(res => {
-      this.props.setToken(res.data.token, res.data.user_id)
+      this.props.setToken(res.data.token, res.data.user_id, this.props.staffLogin)
       localStorage.setItem('token', res.data.token)
       localStorage.setItem('user_id', res.data.user_id)
+      console.log(this.props)
+      this.setState({redirect: true})
     }
   ).catch(err => {
     this.handleError(err.response.data)
@@ -129,14 +135,13 @@ class Login extends Component {
           :
           <div>
             <Button onClick={this.login} children='Login' />
-            <ButtonTransparent onClick={this.changeType} children='or Register' />
+            {!this.props.staffLogin &&<ButtonTransparent onClick={this.changeType} children='or Register' />}
           </div>
           }
           <Text>{this.state.error}</Text>
         </div>
       }
       {this.state.redirect && <Redirect to={this.props.redirect} />}
-      {this.props.user_id  > 0 && <Redirect to='/' />}
       </div>
     )
   }
@@ -146,7 +151,8 @@ function mapStateToProps(state) {
   return {
     token: state.token,
     user_id: state.user_id,
-    profile: state.profile
+    profile: state.profile,
+    staff: state.staff
   };
 };
 

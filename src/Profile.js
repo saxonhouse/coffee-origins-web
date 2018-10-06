@@ -56,7 +56,6 @@ function mapStateToProps(state) {
   return {
     token: state.token,
     user_id: state.user_id,
-    profile: state.profile
   };
 };
 

@@ -1,87 +1,91 @@
 import React, { Component } from 'react'
 import Select from 'react-select'
-import {FormGroup, ControlLabel, FormControl, Checkbox, Grid, Col, Row} from 'react-bootstrap'
+import {Checkbox, Grid, Col, Row, ButtonToolbar, Button, ListGroup, ListGroupItem} from 'react-bootstrap'
 
-function containsObject(obj, list) {
-    for (const i of list) {
-        if (JSON.stringify(i) === JSON.stringify(obj) ) {
-            return true;
-        }
-    }
-    return false;
-}
+
 
 export class Filters extends Component {
   state = {
-    filters: ['type', 'country', 'tasting', 'grower'],
-    values: [],
-    selectedFilters: [],
-    options: {type: [], country: [], tasting: [], grower: []},
+    types: ['type', 'country', 'tasting', 'grower'],
+    filters: {},
+    selectedOptions: []
   }
 
-  getOptions = (filter) => {
-    const { options } = this.state
+  componentDidUpdate(prevProps) {
+    if (prevProps != this.props) {
+      this.getFilters()
+    }
+  }
+
+  getFilters = () => {
+    const { types } = this.state
     const { coffees } = this.props
-    let newOptions = options
+    const filters = {}
+    for (const type of types) {
+      filters[type] = {options: [], selected: false}
+    }
     for (const coffee of coffees) {
-      let coffeeOption = {value: coffee[filter], label: coffee[filter]}
-      if (!containsObject(coffeeOption,newOptions[filter])) {
-        console.log(newOptions[filter])
-        newOptions[filter].push(coffeeOption)
+      for (var filter in filters) {
+        if (filter == 'tasting') {
+          var arr = JSON.parse(coffee[filter])
+          for (const taste of arr) {
+            if (!filters[filter].options.includes(taste.value)) {
+              filters[filter].options.push(taste.value)
+            }
+          }
+        }
+        else if (!filters[filter].options.includes(coffee[filter])) {
+          filters[filter].options.push(coffee[filter])
+          }
         }
       }
-    console.log(newOptions)
-    this.setState({options: newOptions})
+    console.log(filters)
+    this.setState({filters: filters})
   }
 
-  toggleFilter = (event) => {
-    const {selectedFilters} = this.state
-    if (!event.target.checked) {
-      this.setState({selectedFilters: selectedFilters.filter(item => item !== event.target.name)})
-    }
-    else {
-      this.setState({selectedFilters: [...selectedFilters, event.target.name]});
-      this.getOptions(event.target.name)
-    }
+  toggleFilter = (type) => (event) => {
+    const {filters} = this.state
+    filters[type].selected = !filters[type].selected
+    this.setState({filters: filters})
+  }
+
+  toggleOption = () => {
+
   }
 
   render() {
-    const { selectedFilters, selectedOptions, filters, values } = this.state;
-
+    const { types, filters } = this.state;
     return (
       <Grid>
-        <Row>
-          {filters.map((filter) => {
-            return (
-              <Col xs={4} lg={1}>
-                <Checkbox inline name={filter} onChange={this.toggleFilter}>
-                   {filter}
-                </Checkbox>
-              </Col>
-            )
-          })
-          }
+          <Row>
+            <Col lg={6}>
+              <ListGroup>
+                <ListGroupItem>
+                  <ButtonToolbar>
+                  {types.map((type, i) => {
+                    return (<Button type='button' onClick={this.toggleFilter(type)}>{type}</Button>)
+                    }
+                  )}
+                  </ButtonToolbar>
+                </ListGroupItem>
+                {Object.keys(filters).map((name, i) => {
+                  const filter = filters[name]
+                  if (filter.selected) {
+                  return (
+                      <ListGroupItem bsSize="small">
+                      {filter.options.map((option, j) => {
+                        return (
+                            <Checkbox eventKey={option} inline name={option} onChange={this.toggleOption}>
+                               {option}
+                            </Checkbox>
+                        )}
+                      )}
+                    </ListGroupItem>
+                  )}}
+                )}
+              </ListGroup>
+          </Col>
         </Row>
-        {selectedFilters.map((filter) => {
-          return (
-            <Row className='filter'>
-              <Col xs={4} lg={1} >
-                <label for={filter} className='filter-label'>{filter}</label>
-              </Col>
-              <Col xs={8} lg={3}>
-                <Select
-                  isMulti
-                  name={filter}
-                  options={this.state.options[filter.toLowerCase()]}
-                  className="filter-select"
-                  classNamePrefix="select"
-                />
-              </Col>
-            </Row>
-
-            )
-          })
-        }
       </Grid>
     );
   }

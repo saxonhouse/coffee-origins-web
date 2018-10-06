@@ -36,11 +36,6 @@
   text-align: right;
 }
 
-label {
-  font-weight: 400;
-  opacity: 0.8;
-}
-
 .filter {
-  margin-top: 20px;
+  font-size: '80%';
 }

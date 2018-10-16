@@ -39,3 +39,66 @@
 .filter {
   font-size: '80%';
 }
+
+.filter-section {
+  padding: 3px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border: none;
+}
+
+.filter-list {
+  text-align: right;
+  margin-left: 0px;
+}
+
+.filter-list li {
+  font-style: italic;
+  opacity: 0.7;
+  display: inline;
+  margin: 10px;
+}
+
+.option-list {
+  text-align: right;
+  margin-left: 0px;
+}
+
+.option-list li {
+  opacity: 0.8;
+  display: inline;
+  margin: 5px;
+  padding-left: 5px;
+  font-size: 12px;
+}
+
+.option-list li input {
+  margin: .4rem;
+  transform: scale(0.8);
+  vertical-align: top;
+}
+
+.option-list li label {
+  vertical-align: middle;
+  font-weight:400;
+  opacity: 0.8
+}
+
+.filter-list li:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.filter-glyph {
+  vertical-align: middle;
+  font-size: 10px;
+  font-weight: 200;
+}
+
+.filter-type {
+  vertical-align: middle;
+}
+
+.filter-options {
+  text-align: right;
+}

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Row, Navbar, Nav, NavItem } from 'react-bootstrap';
 
 class Header extends Component {
   render() {
     return(
-      <div>
+      <Row>
         <Navbar collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
@@ -33,7 +33,7 @@ class Header extends Component {
           }
           </Navbar.Collapse>
         </Navbar>
-      </div>
+      </Row>
     )
   }
 }

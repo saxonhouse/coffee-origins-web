@@ -15,7 +15,7 @@ export class CoffeeCard extends Component {
       <Card
         fontSize={6}
         fontWeight='bold'
-        width={[ 1, 1, 1/2 ]}
+        width={[ 1, 1/3, 1/4 ]}
         p={5}
         my={5}
         bg='#f6f6ff'
@@ -24,10 +24,7 @@ export class CoffeeCard extends Component {
       >
         <Flex>
           <Box width={1/2}>
-            <Image src={this.props.image} />
-          </Box>
-          <Box width={1/2}>
-            <a href={this.props.admin? `/mission-control/coffee/${this.props.id}`:`/coffee/${this.props.id}`}><Heading>{this.props.name}</Heading></a>
+            <a href={this.props.admin? `/mission-control/coffee/${this.props.id}`:`/coffee/${this.props.id}`}><h4>{this.props.name}</h4></a>
             {this.props.admin && <a href={`/mission-control/edit/${this.props.id}`}>Edit</a>}
           </Box>
         </Flex>

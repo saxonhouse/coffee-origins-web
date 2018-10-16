@@ -5,6 +5,7 @@ import './App.css'
 import { Heading, Text } from 'rebass'
 import { CoffeeCard } from './CoffeeCard'
 import { Filters } from './Filters'
+import {Grid, Row, Col} from 'react-bootstrap'
 
 export class CoffeeList extends Component {
   constructor(props) {
@@ -16,12 +17,14 @@ export class CoffeeList extends Component {
     if (this.props.mainPage) {
       axios.get('http://localhost:8000/').then(res => {
         this.setState({coffees: res.data})
+        this.child.getFilters();
       }).catch(err => console.log(err))
     }
     else {
       for (const coffee_id of this.props.coffees) {
         this._renderCoffee(coffee_id)
       }
+      this.child.getFilters();
     }
   }
 
@@ -33,23 +36,30 @@ export class CoffeeList extends Component {
     }).catch(err => console.log(err))
   }
 
+  filter = (coffees) => {
+    this.setState({filtered: coffees})
+  }
+
   render() {
+    const coffees = this.state.filtered || this.state.coffees
     return (
         <div>
+          <Row className="justify-content-end">
+            <Col className="align-self-end">
+             <Filters ref={instance => { this.child = instance; }} coffees={this.state.coffees} filter={this.filter} />
+            </Col>
+          </Row>
           <Heading> {this.props.heading} </Heading>
-          <div className="row justify-content-end">
-            <div className="col-lg-4 align-self-end">
-             <Filters coffees={this.state.coffees} />
-            </div>
-          </div>
-          {this.state.coffees.map((coffee) => {
+          {coffees.map((coffee) => {
             return (
+              <Col xs={12} md={6} lg={4}>
               <CoffeeCard
                 id={coffee.id}
                 key={coffee.id}
                 name={coffee.name}
                 admin={this.props.admin}
               />
+              </Col>
             )
           })
           }

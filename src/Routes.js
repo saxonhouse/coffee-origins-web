@@ -14,6 +14,7 @@ import { bindActionCreators } from 'redux'
 import { setProfile } from './reducer'
 import { connect } from 'react-redux'
 import { MainPage } from './MainPage'
+import { Grid } from 'react-bootstrap'
 
 
 
@@ -28,7 +29,7 @@ class Routes extends Component {
 
   render() {
     return (
-      <div class="container-fluid">
+      <Grid>
         <Header />
         <BrowserRouter>
           <Switch>
@@ -64,7 +65,7 @@ class Routes extends Component {
             <Route path='/logout' component={Logout} />
           </Switch>
         </BrowserRouter>
-      </div>
+      </Grid>
     )
     }
 

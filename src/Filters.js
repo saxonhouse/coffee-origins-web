@@ -62,10 +62,14 @@ export class Filters extends Component {
     selectedFilters.filter(f => f.type === filter.type && f.option === filter.option).length > 0 ? selectedFilters.splice(selectedFilters.indexOf(f => f.type !== filter.type && f.option !== filter.option),1) : selectedFilters.push(filter)
     for (const filter of selectedFilters) {
       for (const coffee of coffees) {
-        if (type === 'tasting') {
-          if (!JSON.parse(coffee[filter.type]).includes(filter.option)) {
-            out.push(coffee)
+        if (filter.type === 'tasting') {
+          const options = []
+          for (const option of JSON.parse(coffee[filter.type])) {
+            console.log(option)
+            options.push(option.value)
           }
+          console.log(options)
+          options.includes(filter.option) && out.push(coffee)
         }
         else if (coffee[filter.type] !== filter.option) {
           out.push(coffee)

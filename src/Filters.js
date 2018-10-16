@@ -17,7 +17,7 @@ export class Filters extends Component {
   state = {
     types: ['type', 'country', 'tasting', 'grower'],
     filters: {},
-    selectedOptions: [],
+    selectedFilters: [],
     selectedTypes: [],
     filtered: []
   }
@@ -56,26 +56,26 @@ export class Filters extends Component {
 
   toggleOption = (type, option) => {
     let coffees = this.props.coffees.slice(0)
-    console.log(coffees)
-    const { selectedOptions } = this.state
+    const { selectedFilters } = this.state
     let out = []
-    selectedOptions.includes(option)? selectedOptions.splice(selectedOptions.findIndex(i => i === option),1) : selectedOptions.push(option)
-    for (const option of selectedOptions) {
+    let filter = {type: type, option: option}
+    selectedFilters.filter(f => f.type === filter.type && f.option === filter.option).length > 0 ? selectedFilters.splice(selectedFilters.indexOf(f => f.type !== filter.type && f.option !== filter.option),1) : selectedFilters.push(filter)
+    for (const filter of selectedFilters) {
       for (const coffee of coffees) {
-        if (type == 'tasting') {
-          if (!JSON.parse(coffee[type]).includes(option)) {
+        if (type === 'tasting') {
+          if (!JSON.parse(coffee[filter.type]).includes(filter.option)) {
             out.push(coffee)
           }
         }
-        else if (coffee[type] !== option) {
+        else if (coffee[filter.type] !== filter.option) {
           out.push(coffee)
+          console.log(out)
         }
       }
     }
-    for (const coffee of out) {
-      coffees.splice(coffees.findIndex(i => i === coffee),1)
-    }
-    this.setState({selectedOptions: selectedOptions})
+    coffees = coffees.filter(coffee => out.indexOf(coffee) === -1)
+    this.setState({selectedFilters: selectedFilters})
+    console.log(selectedFilters)
     this.props.filter(coffees)
   }
 

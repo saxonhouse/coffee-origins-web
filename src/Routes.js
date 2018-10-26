@@ -29,7 +29,7 @@ class Routes extends Component {
 
   render() {
     return (
-      <Grid>
+      <Grid fluid>
         <Header />
         <BrowserRouter>
           <Switch>

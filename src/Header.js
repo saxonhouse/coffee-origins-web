@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Row, Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Image, Row, Navbar, Nav, NavItem, Grid} from 'react-bootstrap';
+
 
 class Header extends Component {
   render() {
     return(
       <Row>
-        <Navbar collapseOnSelect>
+        <Navbar fluid collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="/">Brew Cross</a>
+              <a href="/">
+                <Image src='https://brewcross.co.uk/brewcross-web.svg' className='logo'/>
+              </a>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>

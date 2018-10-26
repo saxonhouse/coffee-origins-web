@@ -15,7 +15,7 @@ import {Checkbox,
 
 export class Filters extends Component {
   state = {
-    types: ['type', 'country', 'tasting', 'grower'],
+    types: ['type', 'country', 'process'],
     filters: {},
     selectedFilters: [],
     selectedTypes: [],
@@ -86,10 +86,11 @@ export class Filters extends Component {
   render() {
     const { types, filters, selectedTypes } = this.state;
     return (
-              <ListGroup>
+              <ListGroup className='filters'>
                 <ListGroupItem className='filter-section'>
                   <ButtonToolbar>
                   <ul className='filter-list'>
+                  <span className='filter-by'>  Filter by:  </span>
                   {types.map((type, i) => {
                     return (
                       <li onClick={this.toggleFilter(type)}>

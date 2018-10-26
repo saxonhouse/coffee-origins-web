@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import './App.css'
-import { Heading, Text } from 'rebass'
+import { Heading, Text, Box} from 'rebass'
 import { CoffeeCard } from './CoffeeCard'
 import { Filters } from './Filters'
 import {Grid, Row, Col} from 'react-bootstrap'
@@ -10,7 +10,7 @@ import {Grid, Row, Col} from 'react-bootstrap'
 export class CoffeeList extends Component {
   constructor(props) {
     super(props)
-    this.state = {coffees: []}
+    this.state = {coffees: [], favourites: []}
   }
 
   componentDidMount() {
@@ -21,18 +21,25 @@ export class CoffeeList extends Component {
       }).catch(err => console.log(err))
     }
     else {
+      if (this.props.favourites) {
+        for(const coffee_id of this.props.favourites) {
+        this._renderCoffee(coffee_id, true)
+        }
+      }
       for (const coffee_id of this.props.coffees) {
         this._renderCoffee(coffee_id)
       }
-      this.child.getFilters();
+
     }
   }
 
-  _renderCoffee(id) {
+  _renderCoffee(id, favourite) {
     axios.get('http://localhost:8000/' + id).then(res => {
+      res.data.favourite = favourite
       this.setState(prevState => ({
         coffees: [...prevState.coffees, res.data]
       }))
+      this.props.filters && this.child.getFilters();
     }).catch(err => console.log(err))
   }
 
@@ -43,27 +50,28 @@ export class CoffeeList extends Component {
   render() {
     const coffees = this.state.filtered || this.state.coffees
     return (
-        <div>
+        <Grid>
           <Row className="justify-content-end">
             <Col className="align-self-end">
-             <Filters ref={instance => { this.child = instance; }} coffees={this.state.coffees} filter={this.filter} />
+             {this.props.filters && <Filters ref={instance => { this.child = instance; }} coffees={this.state.coffees} filter={this.filter} /> }
             </Col>
           </Row>
           <Heading> {this.props.heading} </Heading>
-          {coffees.map((coffee) => {
+          {coffees.map((coffee, i) => {
             return (
               <Col xs={12} md={6} lg={4}>
               <CoffeeCard
-                id={coffee.id}
                 key={coffee.id}
-                name={coffee.name}
+                coffee={coffee}
                 admin={this.props.admin}
+                color={i%2? '#e98b23' : '#e95424'}
+                innerColor={i%2? '#e95424' : '#e98b23'}
               />
               </Col>
             )
           })
           }
-        </div>
+        </Grid>
       )
       }
 }

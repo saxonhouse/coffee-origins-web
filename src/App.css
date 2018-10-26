@@ -22,6 +22,12 @@
   font-size: large;
 }
 
+html, body {
+  background-color: #142e39;
+  z-index: -6;
+  font-family: 'Cutive Mono', monospace;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -38,6 +44,11 @@
 
 .filter {
   font-size: '80%';
+}
+
+.filters, .list-group-item {
+  background-color: #142e39;
+  color: #ededed;
 }
 
 .filter-section {
@@ -57,6 +68,23 @@
   opacity: 0.7;
   display: inline;
   margin: 10px;
+}
+
+.filter-by {
+  font-style: italic;
+  opacity: 0.7;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.filter-glyph {
+  vertical-align: baseline;
+  font-size: 10px;
+  font-weight: 200;
+}
+
+.filter-type {
+  vertical-align: baseline;
 }
 
 .option-list {
@@ -89,16 +117,86 @@
   cursor: pointer;
 }
 
-.filter-glyph {
-  vertical-align: middle;
-  font-size: 10px;
-  font-weight: 200;
-}
 
-.filter-type {
-  vertical-align: middle;
-}
 
 .filter-options {
   text-align: right;
 }
+
+.field-label {
+  opacity: 0.7;
+  font-style: italic;
+}
+
+.map {
+  position: fixed;
+  height: 100%;
+  bottom: 0;
+  left: 0;
+  opacity: 0.6;
+  z-index: 0;
+}
+
+.header-row {
+  height: 90px;
+}
+
+.navbar {
+  z-index: 2;
+  background-color: #142e39;
+  color: #ededed;
+  border: none;
+  outline: none;
+  height: 100%;
+}
+
+.logo {
+  height: 60px;
+  margin-left: 15%;
+}
+
+
+.navbar-default, .navbar-nav li a {
+  color: #ededed!important;
+  line-height: 60px;
+}
+
+.coffee-text, .favourite-btn {
+  z-index: 5;
+  position: relative;
+  margin-top: 40px;
+}
+
+.coffee-text span {
+  background-color: #fff;
+  opacity: 1;
+}
+
+.coffee-text p {
+  margin-bottom: 25px;
+}
+
+.coffee-card {
+  color: #fff;
+  border-bottom: 1px solid #254b5b;
+  margin-top: 30px;
+}
+
+.coffee-card span {
+  padding: 4px;
+}
+
+.coffee-card h1 span {
+  color: #fff
+}
+
+.coffee-card h2 span {
+
+}
+
+.coffee-card h3 span {
+  background-color: #ededed;
+  color: #142e39
+}
+
+/* gold #e98b23  orange #e95424 muck #142e39 */

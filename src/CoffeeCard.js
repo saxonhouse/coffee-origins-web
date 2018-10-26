@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { Row, Col, Glyphicon } from 'react-bootstrap'
 import {
   Card,
   Heading,
@@ -9,26 +10,33 @@ import {
   Link
 } from 'rebass';
 
+var moment = require('moment')
+
 export class CoffeeCard extends Component {
   render() {
+    const { coffee } = this.props
+    const tasting = JSON.parse(this.props.coffee.tasting)
     return (
-      <Card
-        fontSize={6}
-        fontWeight='bold'
-        width={[ 1, 1/3, 1/4 ]}
-        p={5}
-        my={5}
-        bg='#f6f6ff'
-        borderRadius={8}
-        boxShadow='0 2px 16px rgba(0, 0, 0, 0.25)'
-      >
-        <Flex>
-          <Box width={1/2}>
-            <a href={this.props.admin? `/mission-control/coffee/${this.props.id}`:`/coffee/${this.props.id}`}><h4>{this.props.name}</h4></a>
-            {this.props.admin && <a href={`/mission-control/edit/${this.props.id}`}>Edit</a>}
-          </Box>
-        </Flex>
-      </Card>
+      <div className='coffee-card'>
+            <a href={this.props.admin? `/mission-control/coffee/${coffee.id}`:`/coffee/${coffee.id}`}>
+              <h1>
+              <span style={{backgroundColor: this.props.color}}>{coffee.name}</span>
+              {coffee.favourite && <span style={{fontSize: '50%'}}> <Glyphicon glyph='star' /> </span>}
+              </h1>
+            </a>
+            {this.props.admin && <a href={`/mission-control/edit/${coffee.id}`}>Edit</a>}
+
+            <p> <span>{coffee.type}</span> </p>
+            <h3> <span>{coffee.country}</span> </h3>
+            <Row xs={12}>
+              <Col xs={4} className='field-label'> Last In: </Col>
+              <Col xs={8}> {moment(this.props.coffee.last_in).format("DD-MM-YY")} </Col>
+            </Row>
+            <Row>
+              <Col xs={4} className='field-label'> Next In: </Col>
+              <Col xs={8}> {moment(this.props.coffee.next_in).format("DD-MM-YY")} </Col>
+            </Row>
+      </div>
     )
   }
 }

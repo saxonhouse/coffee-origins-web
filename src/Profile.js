@@ -34,12 +34,9 @@ class Profile extends Component {
       {this.state.loaded?
         <div>
           <CoffeeList
-            heading="Favourites"
-            coffees={this.state.profile.favourites}
-          />
-          <CoffeeList
-            heading="Coffee History"
+            favourites = {this.state.profile.favourites}
             coffees={this.state.profile.coffees}
+            filters
           />
         </div>
         : this.props.user_id?

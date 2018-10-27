@@ -137,10 +137,6 @@ html, body {
   z-index: 0;
 }
 
-.header-row {
-  height: 90px;
-}
-
 .navbar {
   z-index: 2;
   background-color: #142e39;
@@ -150,9 +146,21 @@ html, body {
   height: 100%;
 }
 
+
 .logo {
-  height: 60px;
-  margin-left: 15%;
+  height: 5.5em;
+  margin-bottom: 0.5em;
+  padding-top: 10px;
+}
+
+.navbar-toggle {
+  position: relative;
+  top: 1.4em
+}
+
+.navbar-right li a {
+  position: relative;
+  top: 0.1em;
 }
 
 
@@ -161,10 +169,16 @@ html, body {
   line-height: 60px;
 }
 
-.coffee-text, .favourite-btn {
+.coffee-text, .favourite-btn, .login-to-add {
   z-index: 5;
   position: relative;
   margin-top: 40px;
+}
+
+.login-to-add {
+  background-color : #ededed;
+  margin-bottom: 40px;
+  padding: 1em;
 }
 
 .coffee-text span {

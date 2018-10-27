@@ -97,7 +97,7 @@ class Coffee extends Component {
           >
           <Marker position={JSON.parse(this.state.coffee.location)} />
           </Map>
-          {this.props.user_id?
+          {this.props.user_id > 0?
             <div className='favourite-btn'>
               <Button
                 bsStyle="primary"
@@ -107,11 +107,16 @@ class Coffee extends Component {
               />
             </div>
             :
-            <Login />
+            <div className='login-to-add'>
+              <p>
+              {this.props.qr? 'Login to save this coffee' :  'Login to add to favourites'}
+              </p>
+              <Login />
+            </div>
           }
         </div>
         :
-        <Heading> Not </Heading>
+        <Heading> Loading </Heading>
       }
       </Grid>
     )

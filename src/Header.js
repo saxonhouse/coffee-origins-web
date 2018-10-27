@@ -7,19 +7,17 @@ class Header extends Component {
   render() {
     return(
       <Row>
-        <Navbar fluid collapseOnSelect>
+      <Navbar Fluid>
+        <Navbar collapseOnSelect>
           <Navbar.Header>
-            <Navbar.Brand>
               <a href="/">
                 <Image src='https://brewcross.co.uk/brewcross-web.svg' className='logo'/>
               </a>
-            </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
           <Navbar.Collapse>
           {this.props.user_id > 0?
             <Nav pullRight>
-
               <NavItem eventKey={1} href="/my-coffee">
                 My Coffees
               </NavItem>
@@ -36,6 +34,7 @@ class Header extends Component {
           }
           </Navbar.Collapse>
         </Navbar>
+      </Navbar>
       </Row>
     )
   }

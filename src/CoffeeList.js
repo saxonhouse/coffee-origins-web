@@ -36,10 +36,12 @@ export class CoffeeList extends Component {
   _renderCoffee(id, favourite) {
     axios.get('http://localhost:8000/' + id).then(res => {
       res.data.favourite = favourite
-      this.setState(prevState => ({
-        coffees: [...prevState.coffees, res.data]
-      }))
-      this.props.filters && this.child.getFilters();
+      if (this.state.coffees.filter(c => c.id === id).length === 0) {
+        this.setState(prevState => ({
+          coffees: [...prevState.coffees, res.data]
+        }))
+        this.props.filters && this.child.getFilters();
+      }
     }).catch(err => console.log(err))
   }
 

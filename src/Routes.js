@@ -47,10 +47,14 @@ class Routes extends Component {
             )}/>
             <Route path='/my-coffee' component={Profile} />
             <Route path='/login' render={() => (
-              <Login redirect='/' />
+              <div className='login-wrap'>
+                <Login redirect='/' />
+              </div>
             )}/>
             <Route path='/captains-log' render={() => (
-              <Login staffLogin redirect='/mission-control/' />
+              <div className='login-wrap'>
+                <Login staffLogin redirect='/mission-control/' />
+              </div>
             )}/>
             <Route exact path='/mission-control/' render={({match}) => (
               <Admin />

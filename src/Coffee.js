@@ -108,9 +108,9 @@ class Coffee extends Component {
             </div>
             :
             <div className='login-to-add'>
-              <p>
+              <span>
               {this.props.qr? 'Login to save this coffee' :  'Login to add to favourites'}
-              </p>
+              </span>
               <Login />
             </div>
           }

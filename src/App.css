@@ -176,9 +176,26 @@ html, body {
 }
 
 .login-to-add {
-  background-color : #ededed;
   margin-bottom: 40px;
+  text-align: right;
+}
+
+.login-to-add span {
+  background-color: #ededed;
+  padding: 3px;
+}
+
+.login-to-add .login {
   padding: 1em;
+  background-color : #ededed;
+  position: absolute;
+  right: 0;
+  color: #000;
+}
+
+.login-wrap .login {
+  padding: 1em;
+  background-color : #ededed;
 }
 
 .coffee-text span {

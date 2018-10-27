@@ -95,7 +95,7 @@ class Login extends Component {
 
   render() {
     return(
-      <div>
+      <div className='login'>
         {this.state.registered?
         <Text> Thanks! Check your email to verify your account </Text>
         :

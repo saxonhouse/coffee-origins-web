@@ -1,15 +1,17 @@
 import React, {Component} from 'react'
 import {
   Input,
-  Button,
   Flex,
   Box
 } from 'rebass';
+import { Button, Modal } from 'react-bootstrap'
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import Geocode from "react-geocode";
 import axios from 'axios'
 import DatePicker from 'react-date-picker'
 import { Tasting } from './Tasting'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 var moment = require('moment')
 
 require('dotenv').config()
@@ -18,7 +20,7 @@ Geocode.setApiKey(process.env.REACT_APP_GOOGLE_KEY)
 const CustomField = (props) => {
   return (
     <div className='form-group-row field'>
-      <label for={props.name} className='col-sm-3 col-form-label'>{props.label}</label>
+      <label for={props.name} className='col-sm-3 col-form-label editor-label'>{props.label}</label>
       <div class="col-sm-9">
         {props.children}
       </div>
@@ -41,7 +43,10 @@ class Form extends Component {
       lastIn: new Date(),
       nextIn: new Date(),
       locationSet: false,
-      locationCheck: false
+      locationCheck: false,
+      saving: false,
+      saveError: '',
+      saved: false
     }
     this.renderField = this.renderField.bind(this)
     this.goToPlace = this.goToPlace.bind(this)
@@ -71,12 +76,14 @@ class Form extends Component {
   handleNext = date => this.setState({nextIn: date})
 
   goToPlace(places) {
+    this.setState({gettingLocation: true})
     let term = places.join(',')
     Geocode.fromAddress(term).then(
       response => {
-        this.setState({location: response.results[0].geometry.location, locationSet: true, locationCheck: false})
+        this.setState({location: response.results[0].geometry.location, locationSet: true, locationCheck: false, gettingLocation: false})
       },
       error => {
+        this.setState({gettingLocation: false, locationError: error})
         console.error(error)
       }
       )
@@ -95,6 +102,7 @@ class Form extends Component {
     else {
       const url = this.props.coffee? `http://localhost:8000/${this.props.coffee}/` : 'http://localhost:8000/'
       const method = this.props.coffee? 'patch' : 'post'
+      this.setState({saving: true, saveError: ''});
       axios({
         method: method,
         url: url,
@@ -115,9 +123,19 @@ class Form extends Component {
           last_in: this.state.lastIn,
           next_in: this.state.nextIn,
         }
-        }).then(res=> console.log(res))
-        .catch(err => console.error(err))
+      }).then((res) => {
+        this.setState({saving: false, saved: true, added_id: res.data.id})
+        console.log(res)
+      })
+      .catch((err) => {
+        console.error(err)
+        this.setState({saveError: err.stack})
+      })
     }
+  }
+
+  closeModal = () => {
+    this.setState({showModal: false})
   }
 
   renderField(name, label) {
@@ -138,45 +156,76 @@ class Form extends Component {
     const places = [this.state.region, this.state.country]
     return (
       <div>
-        <form>
-          <Flex flexWrap width={[1, 2/3]} mx={'auto'} my={50}>
-            <Box width={[1, 1/2]}>
-              {this.renderField('name', 'Name')}
-              {this.renderField('type', 'Type')}
-              {this.renderField('roaster', 'Roaster')}
-              {this.renderField('country', 'Country')}
-              {this.renderField('region', 'Region')}
-              <Button type="button" className={this.state.locationCheck? 'locator' : 'locator red'} children="Locate" onClick={() => this.goToPlace(places)} />
-              {this.state.locationCheck && <p> Check your location! </p>}
-            </Box>
-            <Box width={[1, 1/2]}>
-              {this.renderField('grower', 'Grower')}
-              {this.renderField('process', 'Process')}
-              <CustomField name='tasting' label='Tasting'>
-                <Tasting tasting={this.tasting} preset={this.state.tasting} />
-              </CustomField>
-              {this.renderField('shopURL', 'Buy')}
-              <CustomField name='lastIn' label='Last In'>
-                <DatePicker id="lastIn" style={{width: '90%'}} onChange={this.handleLast} value={this.state.lastIn} />
-              </CustomField>
-              <CustomField name='nextIn' label='Next In'>
-                <DatePicker id="nextIn" onChange={this.handleNext} value={this.state.nextIn} />
-              </CustomField>
-              <Button type="submit" children="Submit" onClick={this.handleSubmit} />
-            </Box>
-          </Flex>
-        </form>
-        <Box width={[1]}>
-          <div>
-            <Map className='map'
-                google={this.props.google}
-                center={this.state.location}
-                zoom={10}
-            >
-            <Marker position={this.state.location} />
-            </Map>
-          </div>
-          </Box>
+        <div className='editor'>
+          <Modal show={this.state.saved || this.state.showModal}>
+            <Modal.Header>
+              <Modal.Title>Successfully Submitted</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>The coffee is in the bag.</Modal.Body>
+
+            <Modal.Footer>
+              <Button onClick={this.closeModal}>Close</Button>
+              <a href={`${process.env.REACT_APP_ROOT_URL}coffee/${this.state.added_id}`}>
+                <Button bsStyle="primary">Go to it</Button>
+              </a>
+            </Modal.Footer>
+          </Modal>
+          <form>
+            <Flex flexWrap width={[1, 2/3]} mx={'auto'} my={50}>
+              <Box width={[1, 1/2]}>
+                {this.renderField('name', 'Name')}
+                {this.renderField('type', 'Type')}
+                {this.renderField('roaster', 'Roaster')}
+                {this.renderField('country', 'Country')}
+                {this.renderField('region', 'Region')}
+                <div className='button-wrap'>
+                  <Button
+                    bsStyle="primary"
+                    type="button"
+                    className={this.state.locationCheck? 'locator button-right' : 'locator red button-right'}
+                    disabled={this.state.checkingLocation}
+                    onClick={() => this.goToPlace(places)}
+                  >
+                    <FontAwesomeIcon icon={faMapMarkerAlt} /> Locate
+                  </Button>
+                </div>
+                {this.state.locationCheck && <p> Check your location! </p>}
+                {this.state.locationError && <p> {this.state.locationError} </p>}
+              </Box>
+              <Box width={[1, 1/2]}>
+                {this.renderField('grower', 'Grower')}
+                {this.renderField('process', 'Process')}
+                <CustomField name='tasting' label='Tasting'>
+                  <Tasting tasting={this.tasting} preset={this.state.tasting} />
+                </CustomField>
+                {this.renderField('shopURL', 'Buy')}
+                <CustomField name='lastIn' label='Last In'>
+                  <DatePicker id="lastIn" style={{width: '90%'}} onChange={this.handleLast} value={this.state.lastIn} />
+                </CustomField>
+                <CustomField name='nextIn' label='Next In'>
+                  <DatePicker id="nextIn" onChange={this.handleNext} value={this.state.nextIn} />
+                </CustomField>
+                <div className='button-wrap'>
+                  <Button
+                    bsStyle="primary"
+                    type="submit"
+                    children={this.state.saving? "Submitting...":"Submit"}
+                    onClick={this.handleSubmit}
+                    disabled={this.state.saving}
+                    />
+                  </div>
+              </Box>
+            </Flex>
+          </form>
+        </div>
+        <Map className='map'
+            google={this.props.google}
+            center={this.state.location}
+            zoom={10}
+        >
+        <Marker position={this.state.location} />
+        </Map>
     </div>
     )
   }

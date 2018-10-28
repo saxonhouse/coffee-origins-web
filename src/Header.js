@@ -20,13 +20,15 @@ class Header extends Component {
       <Row>
         <ContainerDiv initialPose={'exit'} pose={'enter'}>
           <Navbar Fluid>
-            <Navbar collapseOnSelect>
+            <Navbar collapseOnSelect className='no-margin-bottom'>
               <Navbar.Header>
+                <Navbar.Brand>
                 <Fade>
                   <a href="/">
                     <Image src='https://brewcross.co.uk/brewcross-web.svg' className='logo'/>
                   </a>
                 </Fade>
+                </Navbar.Brand>
                 <Navbar.Toggle />
               </Navbar.Header>
               <Navbar.Collapse>

@@ -24,7 +24,7 @@
 
 html, body {
   background-color: #142e39;
-  z-index: -6;
+  z-index: -1;
   font-family: 'Cutive Mono', monospace;
 }
 
@@ -129,7 +129,7 @@ html, body {
 }
 
 .map {
-  position: fixed;
+  position: fixed!important;
   height: 100%;
   bottom: 0;
   left: 0;
@@ -148,32 +148,45 @@ html, body {
 
 
 .logo {
-  height: 5.5em;
+  height: 3em;
   margin-bottom: 0.5em;
-  padding-top: 10px;
+}
+
+.navbar-header {
+  height: 5.2em;
 }
 
 .navbar-toggle {
   position: relative;
-  top: 1.4em
+  top: 1.2em;
 }
 
-.navbar-right li a {
-  position: relative;
-  top: 0.1em;
+.no-margin-bottom {
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+.navbar-default {
+  padding-bottom: 0px;
+  margin-bottom: 10px;
 }
 
 
-.navbar-default, .navbar-nav li a {
+.navbar-nav li a {
   color: #ededed!important;
-  line-height: 60px;
+  line-height: 3.7em;
 }
 
-.coffee-text, .favourite-btn, .login-to-add {
+.coffee-text, .favourite-btn, .login-to-add, .editor {
   z-index: 5;
   position: relative;
+  top: 1em;
+}
+
+.favourite-btn, .login-to-add {
   margin-top: 40px;
 }
+
 
 .login-to-add {
   margin-bottom: 40px;
@@ -256,5 +269,23 @@ html, body {
 .orange {
   color: #e95424!important;
 }
+
+.editor {
+  background-color: rgba(255,255,255,0.5);
+  padding: 10px;
+  margin: 50px;
+  margin-top: 10px;
+}
+
+.editor-label {
+  vertical-align: bottom;
+  margin-top: 5px;
+}
+
+.button-wrap {
+  text-align: right;
+  margin-right: 1em;
+}
+
 
 /* gold #e98b23  orange #e95424 muck #142e39 */

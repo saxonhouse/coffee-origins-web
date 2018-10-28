@@ -104,7 +104,7 @@ class Login extends Component {
             name='username'
             value={this.state.username}
             onChange={this.handleChange}
-            placeHolder='Username'
+            placeHolder='Username or Email'
           />
           <Input
             name='password'
@@ -135,7 +135,7 @@ class Login extends Component {
           :
           <div>
             <Button onClick={this.login} children='Login' />
-            {!this.props.staffLogin &&<ButtonTransparent onClick={this.changeType} children='or Register' />}
+            {!this.props.staffLogin && !this.props.verified && <ButtonTransparent onClick={this.changeType} children='or Register' />}
           </div>
           }
           <Text>{this.state.error}</Text>

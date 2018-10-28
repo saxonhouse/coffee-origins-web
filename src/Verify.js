@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux'
 import { setToken } from './reducer'
 import axios from 'axios';
 import './App.css';
+import Login from './Login.js'
+import {Grid} from 'react-bootstrap';
 import {
   Text
 } from 'rebass';
@@ -34,11 +36,16 @@ export default class Verify extends Component {
 
   render() {
     return (
-      <div>
-        {this.state.noKey && <Text> Sorry, no verification key provided </Text>}
-        {this.state.keyError && <Text>Sorry, there was an error with your verification key </Text>}
-        {this.state.verified && <Text> Successfully registered! You can now login </Text>}
-      </div>
+      <Grid>
+        <div className='verify'>
+          {this.state.noKey && <Text> Sorry, no verification key provided </Text>}
+          {this.state.keyError && <Text>Sorry, there was an error with your verification key </Text>}
+          {this.state.verified && <div>
+            <Text> Successfully registered! You can now login </Text>
+            <Login redirect='/' verified />
+          </div>}
+        </div>
+      </Grid>
     )
   }
 

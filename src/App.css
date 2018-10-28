@@ -198,6 +198,10 @@ html, body {
   background-color : #ededed;
 }
 
+.verify {
+  color: #ededed;
+}
+
 .coffee-text span {
   background-color: #fff;
   opacity: 1;

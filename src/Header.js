@@ -1,40 +1,57 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import posed from 'react-pose';
 import { Image, Row, Navbar, Nav, NavItem, Grid} from 'react-bootstrap';
+
+const ContainerDiv = posed.div({
+    enter: { staggerChildren: 100 },
+    exit: { staggerChildren: 20}
+  });
+
+const Fade = posed.div({
+  enter: {opacity: 1, duration: 500},
+  exit: {opacity: 0, duration: 500}
+})
 
 
 class Header extends Component {
   render() {
     return(
       <Row>
-      <Navbar Fluid>
-        <Navbar collapseOnSelect>
-          <Navbar.Header>
-              <a href="/">
-                <Image src='https://brewcross.co.uk/brewcross-web.svg' className='logo'/>
-              </a>
-            <Navbar.Toggle />
-          </Navbar.Header>
-          <Navbar.Collapse>
-          {this.props.user_id > 0?
-            <Nav pullRight>
-              <NavItem eventKey={1} href="/my-coffee">
-                My Coffees
-              </NavItem>
-              <NavItem eventKey={2} href="/logout">
-                Logout
-              </NavItem>
-            </Nav>
-              :
-            <Nav pullRight>
-              <NavItem eventKey={3} href="/login">
-                Login / Signup
-              </NavItem>
-            </Nav>
-          }
-          </Navbar.Collapse>
-        </Navbar>
-      </Navbar>
+        <ContainerDiv initialPose={'exit'} pose={'enter'}>
+          <Navbar Fluid>
+            <Navbar collapseOnSelect>
+              <Navbar.Header>
+                <Fade>
+                  <a href="/">
+                    <Image src='https://brewcross.co.uk/brewcross-web.svg' className='logo'/>
+                  </a>
+                </Fade>
+                <Navbar.Toggle />
+              </Navbar.Header>
+              <Navbar.Collapse>
+                <Fade>
+                {this.props.user_id > 0?
+                  <Nav pullRight>
+                    <NavItem eventKey={1} href="/my-coffee">
+                      My Coffees
+                    </NavItem>
+                    <NavItem eventKey={2} href="/logout">
+                      Logout
+                    </NavItem>
+                  </Nav>
+                    :
+                  <Nav pullRight>
+                    <NavItem eventKey={3} href="/login">
+                      Login / Signup
+                    </NavItem>
+                  </Nav>
+                }
+                </Fade>
+              </Navbar.Collapse>
+            </Navbar>
+          </Navbar>
+        </ContainerDiv>
       </Row>
     )
   }

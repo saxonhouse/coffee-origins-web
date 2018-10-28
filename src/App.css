@@ -234,4 +234,27 @@ html, body {
   color: #142e39
 }
 
+.coffee-name {
+  color: #e98b23!important;
+  font-style: italic;
+}
+
+.coffee-place {
+  color: #e95424!important;
+  font-style: italic;
+}
+
+.coffee-grower {
+  color: #e98b23!important;
+  font-style: italic;
+}
+
+.gold {
+  color:  #e98b23!important;
+}
+
+.orange {
+  color: #e95424!important;
+}
+
 /* gold #e98b23  orange #e95424 muck #142e39 */

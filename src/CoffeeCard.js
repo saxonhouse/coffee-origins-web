@@ -18,24 +18,30 @@ export class CoffeeCard extends Component {
     const tasting = JSON.parse(this.props.coffee.tasting)
     return (
       <div className='coffee-card'>
-            <a href={this.props.admin? `/mission-control/coffee/${coffee.id}`:`/coffee/${coffee.id}`}>
-              <h1>
-              <span style={{backgroundColor: this.props.color}}>{coffee.name}</span>
-              {coffee.favourite && <span style={{fontSize: '50%'}}> <Glyphicon glyph='star' /> </span>}
-              </h1>
-            </a>
-            {this.props.admin && <a href={`/mission-control/edit/${coffee.id}`}>Edit</a>}
+        <a href={this.props.admin? `/mission-control/coffee/${coffee.id}`:`/coffee/${coffee.id}`}>
+          <h1>
+          <Text fontSize={[3,4,5]}>
+            <span style={{backgroundColor: this.props.color}}>{coffee.name}</span>
+            {coffee.favourite && <span style={{fontSize: '50%'}}> <Glyphicon glyph='star' /> </span>}
+          </Text>
+          </h1>
+        </a>
+        {this.props.admin && <a href={`/mission-control/edit/${coffee.id}`}>Edit</a>}
 
-            <p> <span>{coffee.type}</span> </p>
-            <h3> <span>{coffee.country}</span> </h3>
-            <Row xs={12}>
-              <Col xs={4} className='field-label'> Last In: </Col>
-              <Col xs={8}> {moment(this.props.coffee.last_in).format("DD-MM-YY")} </Col>
-            </Row>
-            <Row>
-              <Col xs={4} className='field-label'> Next In: </Col>
-              <Col xs={8}> {moment(this.props.coffee.next_in).format("DD-MM-YY")} </Col>
-            </Row>
+        <p> <span>{coffee.type}</span> </p>
+        <h3>
+          <Text fontSize={[2,3]}>
+            <span>{coffee.country}</span>
+          </Text>
+        </h3>
+        <Row xs={12}>
+          <Col xs={4} className='field-label'> Last In: </Col>
+          <Col xs={8}> {moment(this.props.coffee.last_in).format("DD-MM-YY")} </Col>
+        </Row>
+        <Row>
+          <Col xs={4} className='field-label'> Next In: </Col>
+          <Col xs={8}> {moment(this.props.coffee.next_in).format("DD-MM-YY")} </Col>
+        </Row>
       </div>
     )
   }

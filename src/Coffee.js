@@ -73,21 +73,23 @@ class Coffee extends Component {
       {this.state.loaded?
         <div>
           <Heading className='coffee-text'>
-          <p>
+          <Text fontSize={[3,4,5]}>
             <span>
               {this.props.qr? `You've been drinking a ` : `A `}
-              {coffee.name} {coffee.type}, grown in  {coffee.region && coffee.region}, {coffee.country} {coffee.grower && `by ${coffee.grower}`}
+              <span className='coffee-name'> {coffee.name} </span> {coffee.type}, grown in
+              <span className='coffee-place'> {coffee.region && coffee.region+','} {coffee.country} </span>
+              by <span className='coffee-grower'> {coffee.grower && coffee.grower}</span>
               {coffee.process && ` using a ${coffee.process} process`}.
             </span>
-          </p>
-          <p>
-            <span>
+          </Text>
+          <Text fontSize={[3,4,5]}>
+            <span className='coffee-notes'>
                 Notes: {JSON.parse(coffee.tasting).map((note, i)=> {
-                  return <span>{note.value}{i+1 < JSON.parse(coffee.tasting).length && ', '}</span>
+                  return <span className={i%2? 'gold':'orange'}>{note.value}{i+1 < JSON.parse(coffee.tasting).length && ', '}</span>
                 })
               }
             </span>
-          </p>
+          </Text>
           </Heading>
           <Map className='map'
               google={this.props.google}

@@ -6,6 +6,18 @@ import { Heading, Text, Box} from 'rebass'
 import { CoffeeCard } from './CoffeeCard'
 import { Filters } from './Filters'
 import {Grid, Row, Col} from 'react-bootstrap'
+import posed, {PoseGroup} from 'react-pose'
+
+const CoffeePose = posed.div({
+  enter: { opacity: 1, y: 0, transition: ({i}) => ({delay: i*100}) },
+  exit: { opacity: 0, y: 1000, transition: ({i}) => ({delay: i*100}) }
+  })
+
+const ContainerDiv = posed.div({
+    enter: { staggerChildren: 50 },
+    exit: { staggerChildren: 20}
+  });
+
 
 export class CoffeeList extends Component {
   constructor(props) {
@@ -29,7 +41,6 @@ export class CoffeeList extends Component {
       for (const coffee_id of this.props.coffees) {
         this._renderCoffee(coffee_id)
       }
-
     }
   }
 
@@ -53,26 +64,34 @@ export class CoffeeList extends Component {
     const coffees = this.state.filtered || this.state.coffees
     return (
         <Grid>
-          <Row className="justify-content-end">
-            <Col className="align-self-end">
-             {this.props.filters && <Filters ref={instance => { this.child = instance; }} coffees={this.state.coffees} filter={this.filter} /> }
-            </Col>
-          </Row>
-          <Heading> {this.props.heading} </Heading>
-          {coffees.map((coffee, i) => {
-            return (
-              <Col xs={12} md={6} lg={4}>
-              <CoffeeCard
-                key={coffee.id}
-                coffee={coffee}
-                admin={this.props.admin}
-                color={i%2? '#e98b23' : '#e95424'}
-                innerColor={i%2? '#e95424' : '#e98b23'}
-              />
+          <ContainerDiv>
+            <Row className="justify-content-end">
+              <Col className="align-self-end">
+               {this.props.filters && <Filters ref={instance => { this.child = instance; }} coffees={this.state.coffees} filter={this.filter} /> }
               </Col>
-            )
-          })
-          }
+            </Row>
+            <Heading> {this.props.heading} </Heading>
+            <Row>
+              <PoseGroup flipMove={false}>
+                {coffees.map((coffee, i) => {
+                  return (
+                    <CoffeePose key={i} i={i} >
+                      <Col xs={12} md={6} lg={4}>
+                          <CoffeeCard
+                            key={coffee.id}
+                            coffee={coffee}
+                            admin={this.props.admin}
+                            color={i%2? '#e98b23' : '#e95424'}
+                            innerColor={i%2? '#e95424' : '#e98b23'}
+                          />
+                      </Col>
+                    </CoffeePose>
+                  )
+                })
+                }
+              </PoseGroup>
+            </Row>
+          </ContainerDiv>
         </Grid>
       )
       }

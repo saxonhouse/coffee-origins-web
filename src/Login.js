@@ -29,10 +29,15 @@ class Login extends Component {
     }
     axios.post(
       url,
-        {
+      {
+        headers: {
+          'Accept-Encoding': 'gzip'
+        },
+        body: {
           username: this.state.username,
           password: this.state.password
         }
+      }
     ).then(res => {
       this.props.setToken(res.data.token, res.data.user_id, this.props.staffLogin)
       localStorage.setItem('token', res.data.token)

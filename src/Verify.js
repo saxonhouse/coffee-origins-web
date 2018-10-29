@@ -10,6 +10,8 @@ import {
   Text
 } from 'rebass';
 
+require('dotenv').config()
+
 export default class Verify extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +21,7 @@ export default class Verify extends Component {
   componentDidMount() {
     if (this.props.match.params.key) {
       axios.post(
-        'http://localhost:8000/auth/registration/verify-email/',
+        `${process.env.REACT_APP_API_URL}auth/registration/verify-email/`,
         {key: this.props.match.params.key}
       ).then(res => {
         console.log(res)

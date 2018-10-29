@@ -6,6 +6,8 @@ import './App.css'
 import { Heading, Text } from 'rebass'
 import { CoffeeList } from './CoffeeList'
 
+require('dotenv').config()
+
 class Profile extends Component {
   constructor(props) {
     super(props)
@@ -19,7 +21,7 @@ class Profile extends Component {
   _getProfile() {
     axios({
       type: 'get',
-      url: 'http://localhost:8000/profile/' + this.props.user_id + '/',
+      url: `${process.env.REACT_APP_API_URL}profile/${this.props.user_id}/`,
       headers: {
         'Authorization' : 'Token ' + this.props.token
       }

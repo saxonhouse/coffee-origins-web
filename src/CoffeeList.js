@@ -8,6 +8,8 @@ import { Filters } from './Filters'
 import {Grid, Row, Col} from 'react-bootstrap'
 import posed, {PoseGroup} from 'react-pose'
 
+require('dotenv').config()
+
 const CoffeePose = posed.div({
   enter: { opacity: 1, y: 0, transition: ({i}) => ({delay: i*100}) },
   exit: { opacity: 0, y: 1000, transition: ({i}) => ({delay: i*100}) }
@@ -27,7 +29,7 @@ export class CoffeeList extends Component {
 
   componentDidMount() {
     if (this.props.mainPage) {
-      axios.get('http://localhost:8000/').then(res => {
+      axios.get(process.env.REACT_APP_API_URL).then(res => {
         this.setState({coffees: res.data})
         this.child.getFilters();
       }).catch(err => console.log(err))
@@ -45,7 +47,7 @@ export class CoffeeList extends Component {
   }
 
   _renderCoffee(id, favourite) {
-    axios.get('http://localhost:8000/' + id).then(res => {
+    axios.get(process.env.REACT_APP_API_URL + id).then(res => {
       res.data.favourite = favourite
       if (this.state.coffees.filter(c => c.id === id).length === 0) {
         this.setState(prevState => ({

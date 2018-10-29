@@ -13,6 +13,8 @@ import {
   Text
 } from 'rebass';
 
+require('dotenv').config()
+
 class Login extends Component {
   constructor(props) {
     super(props)
@@ -21,9 +23,9 @@ class Login extends Component {
   }
 
   login = () => {
-    let url = 'http://localhost:8000/login/'
+    let url = `${process.env.REACT_APP_API_URL}login/`
     if (this.props.staffLogin) {
-      url = 'http://localhost:8000/staff-login/'
+      url = `${process.env.REACT_APP_API_URL}staff-login/`
     }
     axios.post(
       url,
@@ -50,7 +52,7 @@ class Login extends Component {
     else {
       this.setState({mismatch: false})
       axios.post(
-        'http://localhost:8000/auth/registration/',
+        `${process.env.REACT_APP_API_URL}auth/registration/`,
         {
           username: this.state.username,
           password1: this.state.password,

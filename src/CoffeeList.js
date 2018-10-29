@@ -29,7 +29,7 @@ export class CoffeeList extends Component {
 
   componentDidMount() {
     if (this.props.mainPage) {
-      axios.get(process.env.REACT_APP_API_URL).then(res => {
+      axios.get(`${process.env.REACT_APP_API_URL}/?format=json`).then(res => {
         this.setState({coffees: res.data})
         this.child.getFilters();
       }).catch(err => console.log(err))
@@ -47,7 +47,7 @@ export class CoffeeList extends Component {
   }
 
   _renderCoffee(id, favourite) {
-    axios.get(process.env.REACT_APP_API_URL + id).then(res => {
+    axios.get(`${process.env.REACT_APP_API_URL}${id}/?format=json`).then(res => {
       res.data.favourite = favourite
       if (this.state.coffees.filter(c => c.id === id).length === 0) {
         this.setState(prevState => ({

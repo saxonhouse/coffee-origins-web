@@ -23,22 +23,16 @@ class Login extends Component {
   }
 
   login = () => {
-    let url = `${process.env.REACT_APP_API_URL}login/`
+    let url = `${process.env.REACT_APP_API_URL}login/?format=json`
     if (this.props.staffLogin) {
-      url = `${process.env.REACT_APP_API_URL}staff-login/`
+      url = `${process.env.REACT_APP_API_URL}staff-login/?format=json`
     }
     axios.post(
       url,
-      {
-        headers: {
-          'Content-type' : 'application/json'
-        },
-        body: {
+        {
           username: this.state.username,
           password: this.state.password
         }
-      }
-
     ).then(res => {
       this.props.setToken(res.data.token, res.data.user_id, this.props.staffLogin)
       localStorage.setItem('token', res.data.token)
@@ -58,7 +52,7 @@ class Login extends Component {
     else {
       this.setState({mismatch: false})
       axios.post(
-        `${process.env.REACT_APP_API_URL}auth/registration/`,
+        `${process.env.REACT_APP_API_URL}auth/registration/?format=json`,
         {
           username: this.state.username,
           password1: this.state.password,

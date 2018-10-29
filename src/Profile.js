@@ -21,7 +21,7 @@ class Profile extends Component {
   _getProfile() {
     axios({
       type: 'get',
-      url: `${process.env.REACT_APP_API_URL}profile/${this.props.user_id}/`,
+      url: `${process.env.REACT_APP_API_URL}profile/${this.props.user_id}/?format=json`,
       headers: {
         'Authorization' : 'Token ' + this.props.token
       }

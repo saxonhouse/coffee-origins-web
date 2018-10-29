@@ -21,7 +21,7 @@ export default class Verify extends Component {
   componentDidMount() {
     if (this.props.match.params.key) {
       axios.post(
-        `${process.env.REACT_APP_API_URL}auth/registration/verify-email/`,
+        `${process.env.REACT_APP_API_URL}auth/registration/verify-email/?format=json`,
         {key: this.props.match.params.key}
       ).then(res => {
         console.log(res)

@@ -56,7 +56,7 @@ class Form extends Component {
 
   componentDidMount() {
     if (this.props.coffee) {
-      axios.get(`${process.env.REACT_APP_API_URL}${this.props.coffee}/`).then(
+      axios.get(`${process.env.REACT_APP_API_URL}${this.props.coffee}/?format=json`).then(
         res => {
           res.data.location = JSON.parse(res.data.location)
           res.data.tasting = JSON.parse(res.data.tasting)
@@ -101,7 +101,7 @@ class Form extends Component {
       this.setState({locationCheck: true})
     }
     else {
-      const url = this.props.coffee? `${process.env.REACT_APP_API_URLS}${this.props.coffee}/` : process.env.REACT_APP_API_URL
+      const url = this.props.coffee? `${process.env.REACT_APP_API_URLS}${this.props.coffee}/?format=json` : `${process.env.REACT_APP_API_URL}/?format=json`
       const method = this.props.coffee? 'patch' : 'post'
       this.setState({saving: true, saveError: ''});
       axios({

@@ -55,12 +55,13 @@ class Form extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.coffee)
     if (this.props.coffee) {
       axios.get(`http://localhost:8000/${this.props.coffee}/`).then(
         res => {
           res.data.location = JSON.parse(res.data.location)
           res.data.tasting = JSON.parse(res.data.tasting)
+          res.data.lastIn = new Date(res.data.last_in)
+          res.data.nextIn = new Date(res.data.next_in)
           this.setState(res.data)
         }
       )
@@ -90,7 +91,7 @@ class Form extends Component {
   }
 
   tasting(tasting) {
-    this.setState({tasting: tasting})
+    this.setState({tasting})
     console.log(tasting)
   }
 

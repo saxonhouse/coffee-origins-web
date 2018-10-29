@@ -18,17 +18,15 @@ export class Tasting extends Component<*, State> {
     value: [],
   };
 
-  componentDidMount() {
-    if (this.props.preset) {
+  componentDidUpdate(prevProps) {
+    if(prevProps != this.props) {
       this.setState({value: this.props.preset})
     }
   }
 
   handleChange = (value: any, actionMeta: any) => {
-    console.group('Value Changed');
     console.log(value);
     console.log(`action: ${actionMeta.action}`);
-    console.groupEnd();
     this.setState({ value });
     this.props.tasting(value)
   };
@@ -51,7 +49,7 @@ export class Tasting extends Component<*, State> {
           inputValue: '',
           value: [...value, createOption(inputValue)],
         });
-        this.props.tasting(value)
+        this.props.tasting([...value, createOption(inputValue)])
         event.preventDefault();
     }
   };

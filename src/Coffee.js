@@ -23,7 +23,7 @@ class Coffee extends Component {
   componentDidMount() {
     this.loadCoffee();
     if (this.props.user_id && this.props.qr) {
-      let url = process.env.REACT_APP_API_URL + 'profile/' + this.props.user_id +'/?format=json'
+      let url = `${process.env.REACT_APP_API_URL}profile/${this.props.user_id}/`
       axios.get(url).then(res => {
         let history = res.data.coffees
         history.push(this.props.match.params.id)
@@ -42,7 +42,7 @@ class Coffee extends Component {
 
   loadCoffee = () => {
     let id = this.props.match.params.id;
-    axios.get(process.env.REACT_APP_API_URL + id + '/?format=json').then(res => {
+    axios.get(`${process.env.REACT_APP_API_URL}${id}/`).then(res => {
       this.setState({coffee: res.data, loaded: true})
       console.log(JSON.parse(res.data.location))
     }).catch(err => console.log(err))
@@ -50,7 +50,7 @@ class Coffee extends Component {
 
   addToFavourites = () => {
     this.setState({favouriting : true})
-    let url = process.env.REACT_APP_API_URL + 'profile/' + this.props.user_id +'/?format=json'
+    let url = `${process.env.REACT_APP_API_URL}profile/${this.props.user_id}/`
     axios.get(url).then(res => {
       let favourites = res.data.favourites
       favourites.push(this.props.match.params.id)

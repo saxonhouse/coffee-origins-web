@@ -52,7 +52,7 @@ class Login extends Component {
     else {
       this.setState({mismatch: false})
       axios.post(
-        `${process.env.REACT_APP_API_URL}auth/registration/?format=json`,
+        `${process.env.REACT_APP_API_URL}auth/registration/`,
         {
           username: this.state.username,
           password1: this.state.password,

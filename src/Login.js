@@ -23,20 +23,15 @@ class Login extends Component {
   }
 
   login = () => {
-    let url = `${process.env.REACT_APP_API_URL}login/?format=json`
+    let url = `${process.env.REACT_APP_API_URL}login/`
     if (this.props.staffLogin) {
-      url = `${process.env.REACT_APP_API_URL}staff-login/?format=json`
+      url = `${process.env.REACT_APP_API_URL}staff-login/`
     }
     axios.post(
       url,
       {
-        headers: {
-          'Accept-Encoding': 'gzip'
-        },
-        body: {
           username: this.state.username,
           password: this.state.password
-        }
       }
     ).then(res => {
       this.props.setToken(res.data.token, res.data.user_id, this.props.staffLogin)

@@ -101,7 +101,7 @@ class Form extends Component {
       this.setState({locationCheck: true})
     }
     else {
-      const url = this.props.coffee? `${process.env.REACT_APP_API_URLS}${this.props.coffee}/` : `${process.env.REACT_APP_API_URL}/`
+      const url = this.props.coffee? `${process.env.REACT_APP_API_URLS}${this.props.coffee}/` : `${process.env.REACT_APP_API_URL}`
       const method = this.props.coffee? 'patch' : 'post'
       this.setState({saving: true, saveError: ''});
       axios({

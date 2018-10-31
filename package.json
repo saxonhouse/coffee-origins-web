@@ -22,6 +22,7 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5",
     "react-select": "^2.1.0",
+    "react-spinners": "^0.4.7",
     "react-tag-input": "^5.2.3",
     "react-tagsinput": "^3.19.0",
     "rebass": "^2.0.0-10",

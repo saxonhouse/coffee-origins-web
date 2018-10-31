@@ -288,5 +288,10 @@ html, body {
   margin-right: 1em;
 }
 
+.loading {
+  text-align: center;
+  padding: 30px;
+}
+
 
 /* gold #e98b23  orange #e95424 muck #142e39 */

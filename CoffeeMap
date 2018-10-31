@@ -1,0 +1,20 @@
+<Row>
+  <PoseGroup flipMove={false}>
+    {coffees.map((coffee, i) => {
+      return (
+        <CoffeePose key={i} i={i} >
+          <Col xs={12} md={6} lg={4}>
+              <CoffeeCard
+                key={coffee.id}
+                coffee={coffee}
+                admin={this.props.admin}
+                color={i%2? '#e98b23' : '#e95424'}
+                innerColor={i%2? '#e95424' : '#e98b23'}
+              />
+          </Col>
+        </CoffeePose>
+      )
+    })
+    }
+  </PoseGroup>
+</Row>

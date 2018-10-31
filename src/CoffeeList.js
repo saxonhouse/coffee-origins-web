@@ -3,17 +3,13 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import './App.css'
 import { Heading, Text, Box} from 'rebass'
-import { CoffeeCard } from './CoffeeCard'
 import { Filters } from './Filters'
 import {Grid, Row, Col} from 'react-bootstrap'
-import posed, {PoseGroup} from 'react-pose'
+import posed from 'react-pose'
+import { CoffeeMap } from './CoffeeMap'
 
 require('dotenv').config()
 
-const CoffeePose = posed.div({
-  enter: { opacity: 1, y: 0, transition: ({i}) => ({delay: i*100}) },
-  exit: { opacity: 0, y: 1000, transition: ({i}) => ({delay: i*100}) }
-  })
 
 const ContainerDiv = posed.div({
     enter: { staggerChildren: 50 },
@@ -73,26 +69,7 @@ export class CoffeeList extends Component {
               </Col>
             </Row>
             <Heading> {this.props.heading} </Heading>
-            <Row>
-              <PoseGroup flipMove={false}>
-                {coffees.map((coffee, i) => {
-                  return (
-                    <CoffeePose key={i} i={i} >
-                      <Col xs={12} md={6} lg={4}>
-                          <CoffeeCard
-                            key={coffee.id}
-                            coffee={coffee}
-                            admin={this.props.admin}
-                            color={i%2? '#e98b23' : '#e95424'}
-                            innerColor={i%2? '#e95424' : '#e98b23'}
-                          />
-                      </Col>
-                    </CoffeePose>
-                  )
-                })
-                }
-              </PoseGroup>
-            </Row>
+            <CoffeeMap coffees={coffees} admin={this.props.admin} />
           </ContainerDiv>
         </Grid>
       )

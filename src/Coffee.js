@@ -8,7 +8,7 @@ import {
 } from 'rebass';
 import { Button, Glyphicon, Grid } from 'react-bootstrap';
 import Login from './Login';
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import CoffeePage from './CoffeePage'
 
 require('dotenv').config()
 
@@ -72,35 +72,7 @@ class Coffee extends Component {
     const coffee = this.state.coffee;
     return (
       <Grid>
-      {this.state.loaded?
-        <div>
-          <Heading className='coffee-text'>
-          <Text fontSize={[3,4,5]}>
-            <span>
-              {this.props.qr? `You've been drinking a ` : `A `}
-              <span className='coffee-name'> {coffee.name} </span> {coffee.type}, grown in
-              <span className='coffee-place'> {coffee.region && coffee.region+','} {coffee.country} </span>
-              by <span className='coffee-grower'> {coffee.grower && coffee.grower}</span>
-              {coffee.process && ` using a ${coffee.process} process`}.
-            </span>
-          </Text>
-          <Text fontSize={[3,4,5]}>
-            <span className='coffee-notes'>
-                Notes: {JSON.parse(coffee.tasting).map((note, i)=> {
-                  return <span className={i%2? 'gold':'orange'}>{note.value}{i+1 < JSON.parse(coffee.tasting).length && ', '}</span>
-                })
-              }
-            </span>
-          </Text>
-          </Heading>
-          <Map className='map'
-              google={this.props.google}
-              center={JSON.parse(coffee.location)}
-              initialCenter={JSON.parse(coffee.location)}
-              zoom={10}
-          >
-          <Marker position={JSON.parse(this.state.coffee.location)} />
-          </Map>
+          <CoffeePage qr={this.props.qr} coffee={this.state.coffee} />
           {this.props.user_id > 0?
             <div className='favourite-btn'>
               <Button
@@ -118,10 +90,6 @@ class Coffee extends Component {
               <Login />
             </div>
           }
-        </div>
-        :
-        <Heading> Loading </Heading>
-      }
       </Grid>
     )
   }
@@ -135,8 +103,4 @@ function mapStateToProps(state) {
   };
 };
 
-connect(mapStateToProps)(Coffee)
-
-export default GoogleApiWrapper({
-  apiKey: process.env.REACT_APP_GOOGLE_KEY
-})(Coffee)
+export default connect(mapStateToProps)(Coffee)

@@ -43,7 +43,7 @@ class CoffeePage extends Component {
             </Map>
           </div>
         :
-          <Loading color={'#142e39'} />
+          <Loading color={ '#142e39' } />
         }
       </div>
     )
